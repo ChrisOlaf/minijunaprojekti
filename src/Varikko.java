@@ -6,6 +6,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Varikko parseroi digitrafficilta tulevan junadatan Juna- ja
+ * TimeTableRow-luokkien pyytämillä parametreilla.
+ *
+ * @author Risto Rautanen
+ */
+
 public class Varikko {
 
     static String baseurl = "https://rata.digitraffic.fi/api/v1";
@@ -34,7 +41,7 @@ public class Varikko {
 //            System.out.println(junat.get(0));
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
             System.out.println("Data ei saanut Lukea.");
         }
     }
