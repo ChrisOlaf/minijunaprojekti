@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Matkahaku {
 
     // Antti
+    
     public static void hae() {
 
         // /live-trains/station/HKI/TPE
