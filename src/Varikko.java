@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Varikko {
+
     static String baseurl = "https://rata.digitraffic.fi/api/v1";
-    //    static URL url = new URL(baseurl+"/live-trains/station/HKI/LH");
+
     static public List<Juna> junat;
 
-    private static void lueJunanJSONData(String urlparam) {
-        URL url = new URL(baseurl + urlparam);
+    public static void lueJunanJSONData(String urlparam) {
 
         try {
+
+            URL url = new URL(baseurl + urlparam);
+            // = new URL(baseurl + "/live-trains/station/HKI/LH");
 
             ObjectMapper mapper = new ObjectMapper();
 
