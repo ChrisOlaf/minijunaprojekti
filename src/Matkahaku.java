@@ -14,9 +14,6 @@ public class Matkahaku {
         
         Scanner matkalue = new Scanner(System.in);
 
-        // haetaan lista asemista prosessointia varten
-        Asema.haeAsemat();
-
         String lahtoAsema = "HKI";
         String kohdeAsema = "TKU";
 

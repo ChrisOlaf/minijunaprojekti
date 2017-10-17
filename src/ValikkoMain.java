@@ -8,6 +8,9 @@ public class ValikkoMain {
 
         Scanner in = new Scanner(System.in);
 
+        // haetaan lista asemista prosessointia varten
+        Asema.haeAsemat();
+
         end:
         for (; ; ) {
 
