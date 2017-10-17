@@ -32,5 +32,4 @@ public class Varikko {
             System.out.println(ex);
         }
     }
-
 }
