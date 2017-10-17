@@ -4,7 +4,7 @@ public class Junahaku {
 
         // TODO
 
-        //uus kommentti koo
+        //uus kommentti koo koo
 
     }
 
