@@ -23,14 +23,21 @@ public class JSON_pohja_junat {
 
     private static void lueJunanJSONData() {
         String baseurl = "https://rata.digitraffic.fi/api/v1";
+
         try {
+
             URL url = new URL(baseurl+"/live-trains/station/HKI/LH");
             ObjectMapper mapper = new ObjectMapper();
+
             CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
+
             List<Juna> junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+
             System.out.println(junat.get(0).getTrainNumber());
+
             // Seuraavaa varten on toteutettava TimeTableRow luokka:
             //System.out.println(junat.get(0).getTimeTableRows().get(0).getScheduledTime());
+
             System.out.println("\n\n");
             System.out.println(junat.get(0));
 
@@ -43,16 +50,22 @@ public class JSON_pohja_junat {
 
 
 class Juna {
+
     boolean cancelled;
     String commuterLineID;
+
     //LocalDate departureDate;  // Jackson ei oikein pidä Java 8 päivistä oletuksena
     Date departureDate;
+
     String operatorShortCode;
     int operatorUICCode;
+
     boolean runningCurrently;
+
     List<TimeTableRow> timeTableRows;
     Date timetableAcceptanceDate;
     String timetableType;
+
     String trainCategory;
     int trainNumber;
     String trainType;

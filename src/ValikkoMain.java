@@ -6,6 +6,8 @@ public class ValikkoMain {
 
     public static void main(String[] args) {
 
+        Varikko.haeJSONData();
+
         Scanner in = new Scanner(System.in);
 
         end:

@@ -1,0 +1,34 @@
+ValikkoMain: 
++ Varikko.lueJSONData()
+_____________________
+
+Varikko: 
++ lueJSONData()
+	+ luoJunat()
+
+Juna:
++ Juna(data)
+- jäsenmuuttujat
+
++ getterit
+
+Asema:
++ Asema(aseman tunnus)
++ haeJunat()
+_____________________
+
+Junahaku:
+=> kysy junan nimi/numero
+=> hae kyseisen junan tiedot
+=> näytä junan tiedot muodossa x
+
+Haeasema:
+=> kysy aseman nimi / tunnus
+=> hae kaikki junat, joilla tiedoissa asema x
+=> näytä junien tiedot lajiteltuna saapuvat / lähtevät
+
+Haematka:
+=> kysy lähtöasema ja pääteasema
+=> hae junat, joilla lähtöasema x ja pääteasema x
+=> näytä junat listana muodossa x
+
