@@ -29,11 +29,11 @@ public class ValikkoMain {
                 switch (valinta) {
                     case "1":
                         System.out.println("Junahaku.hae()");
-                        Junahaku.hae();
+                        // Junahaku.hae();
                         break outer;
                     case "2":
                         System.out.println("Asemahaku.hae()");
-                        Asemahaku.hae();
+                        // Asemahaku.hae();
                         break outer;
                     case "3":
                         System.out.println("Matkahaku.hae()");
