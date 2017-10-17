@@ -17,7 +17,7 @@ public class Matkahaku {
         String lahtoAsema = "HKI";
         String kohdeAsema = "TKU";
 
-        System.out.println("\nHaetaan junat tiettyjen asemien välillä seuraavaan vuorokauden aikana.\n\n");
+        System.out.println("\nHaetaan junat tiettyjen asemien välillä seuraavaan vuorokauden aikana.\n");
 
         // kysy lähtöasema
         lahtoasema:
@@ -30,7 +30,7 @@ public class Matkahaku {
                 break lahtoasema;
             }
 
-            System.out.println("\nSyötä kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
+            System.out.println("\nSyötä kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).");
             continue;
 
         }
@@ -46,10 +46,12 @@ public class Matkahaku {
                 break kohdeasema;
             }
 
-            System.out.println("\nSyötä kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
+            System.out.println("\nSyötä kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).");
             continue;
 
         }
+
+        System.out.println("");
 
         String url = "/live-trains/station/" + lahtoAsema + "/" + kohdeAsema;
 
@@ -68,7 +70,7 @@ public class Matkahaku {
                 print = j.getCommuterLineID() + "-juna"
                         + ", Liikkeessä: " + j.isRunningCurrently() + "\n"
                         + "Lähtö -- " + lahtoAsema + ": " + j.timeTableRows.get(0).getScheduledTime() + "\n"
-                        + "Saapuminen -- " + kohdeAsema + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime() + "\n"
+                        + "Saapuminen -- " + kohdeAsema + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime()
                         + "\n";
 
             } else {
@@ -76,7 +78,7 @@ public class Matkahaku {
                 print = "Juna " + j.getTrainType() + " " + j.getTrainNumber()
                         + ", Liikkeessä: " + j.isRunningCurrently() + "\n"
                         + "Lähtö -- " + lahtoAsema + ": " + j.timeTableRows.get(0).getScheduledTime() + "\n"
-                        + "Saapuminen -- " + kohdeAsema + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime() + "\n"
+                        + "Saapuminen -- " + kohdeAsema + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime()
                         + "\n";
 
             }

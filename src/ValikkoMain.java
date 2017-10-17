@@ -36,11 +36,12 @@ public class ValikkoMain {
                         // Asemahaku.hae();
                         break outer;
                     case "3":
-                        System.out.println("Matkahaku.hae()");
+                        // System.out.println("Matkahaku.hae()");
                         Matkahaku.hae();
                         break outer;
                     case "0":
-                        System.out.println("Lopetetaan ohjelma.");
+                        System.out.println("Lopetetaan ohjelma. Paina ENTER.");
+                        in.nextLine();
                         break end;
                     default:
                         System.out.println("Et valinnut valintaa 1, 2, 3 tai 0. Valitse uudelleen!\n");
