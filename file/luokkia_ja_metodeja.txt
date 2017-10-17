@@ -1,34 +1,62 @@
-ValikkoMain: 
-+ Varikko.lueJSONData()
+ValikkoMain:
+
 _____________________
 
 Varikko: 
-+ lueJSONData()
-	+ luoJunat()
+
++ lueJSONData (URL)
+
+(Junat - asema tai matka)
+URL: /live-trains/station/<station_shortcode>?arrived_trains=arrived_trains>&arriving_trains=arriving_trains> &departed_trains=<departed_trains>&departing_trains=<departing_trains>&version=<change_number>
+Esimerkki: /live-trains/station/HKI
+Esimerkki: /live-trains/station/HKI?arrived_trains=5&arriving_trains=5&departed_trains=5&departing_trains=5&include_nonstopping=false
+
+URL: /live-trains/station/<departure_station_code>/<arrival_station_code>?departure_date=<departure_date>&from=<from>&to=<to>&limit=<limit>
+Esimerkki: /live-trains/station/HKI/TPE
+
+(Juna)
+URL: /trains/<train_number>?departure_date=<departure_date>&version=<version >
+Esimerkki: /trains/latest/1
+Esimerkki: /trains/2017-01-01/1
+
 
 Juna:
+
 + Juna(data)
 - jäsenmuuttujat
 
 + getterit
 
+
 Asema:
+
 + Asema(aseman tunnus)
 + haeJunat()
 _____________________
 
 Junahaku:
+
 => kysy junan nimi/numero
++ lueJSONJunaData(Junanumero)
+
 => hae kyseisen junan tiedot
 => näytä junan tiedot muodossa x
 
-Haeasema:
+
+Asemahaku:
+
 => kysy aseman nimi / tunnus
+Varikko.lueJSONAsemaData(Asema)
+
 => hae kaikki junat, joilla tiedoissa asema x
 => näytä junien tiedot lajiteltuna saapuvat / lähtevät
 
-Haematka:
+
+Matkahaku:
+
 => kysy lähtöasema ja pääteasema
+Varikko.lueJSONMatkaData(Asema, asema)
+
 => hae junat, joilla lähtöasema x ja pääteasema x
 => näytä junat listana muodossa x
 
