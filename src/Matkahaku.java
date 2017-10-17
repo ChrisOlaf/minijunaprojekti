@@ -65,7 +65,7 @@ public class Matkahaku {
 
             String print;
 
-            if (j.getCommuterLineID() != null) {
+            if (!("".equals(j.getCommuterLineID()))) {
 
                 print = j.getCommuterLineID() + "-juna"
                         + ", Liikkeessä: " + j.isRunningCurrently() + "\n"
