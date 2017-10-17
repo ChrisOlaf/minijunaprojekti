@@ -23,14 +23,14 @@ Esimerkki: /trains/2017-01-01/1
 Juna:
 
 + Juna(data)
-- jäsenmuuttujat
+- jï¿½senmuuttujat
 
 + getterit
 
 
-Asema:
+TimeTableRow:
 
-+ Asema(aseman tunnus)
++ TimeTableRow(aseman tunnus)
 + haeJunat()
 _____________________
 
@@ -40,23 +40,23 @@ Junahaku:
 + lueJSONJunaData(Junanumero)
 
 => hae kyseisen junan tiedot
-=> näytä junan tiedot muodossa x
+=> nï¿½ytï¿½ junan tiedot muodossa x
 
 
 Asemahaku:
 
 => kysy aseman nimi / tunnus
-Varikko.lueJSONAsemaData(Asema)
+Varikko.lueJSONAsemaData(TimeTableRow)
 
 => hae kaikki junat, joilla tiedoissa asema x
-=> näytä junien tiedot lajiteltuna saapuvat / lähtevät
+=> nï¿½ytï¿½ junien tiedot lajiteltuna saapuvat / lï¿½htevï¿½t
 
 
 Matkahaku:
 
-=> kysy lähtöasema ja pääteasema
-Varikko.lueJSONMatkaData(Asema, asema)
+=> kysy lï¿½htï¿½asema ja pï¿½ï¿½teasema
+Varikko.lueJSONMatkaData(TimeTableRow, asema)
 
-=> hae junat, joilla lähtöasema x ja pääteasema x
-=> näytä junat listana muodossa x
+=> hae junat, joilla lï¿½htï¿½asema x ja pï¿½ï¿½teasema x
+=> nï¿½ytï¿½ junat listana muodossa x
 
