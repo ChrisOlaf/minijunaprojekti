@@ -2,14 +2,17 @@ import java.util.Scanner;
 
 public class ValikkoMain {
 
+    // Antti
+
     public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
 
         end:
         for (; ; ) {
 
             String valinta = "0";
 
-            Scanner in = new Scanner(System.in);
 
             System.out.println("\nPäävalikko - Mitä haluat tehdä?\n\n"
                     + "1 -- Hae junan tiedot\n"
@@ -48,6 +51,8 @@ public class ValikkoMain {
 //            in.nextLine();
 
         }
+
+        in.close();
 
     }
 
