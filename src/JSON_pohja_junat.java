@@ -52,4 +52,3 @@ public class JSON_pohja_junat {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class TimeTableRow {
 }
-
