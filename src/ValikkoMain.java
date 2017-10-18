@@ -36,12 +36,12 @@ public class ValikkoMain {
             for (; ; ) {
                 switch (valinta) {
                     case "1":
-                        System.out.println("Junahaku.hae()");
-                        // Junahaku.hae();
+                        // System.out.println("Junahaku.hae()");
+                        Junahaku.hae();
                         break outer;
                     case "2":
-                        System.out.println("Asemahaku.hae()");
-                        // Asemahaku.hae();
+                        // System.out.println("Asemahaku.hae()");
+                        Asemahaku.hae();
                         break outer;
                     case "3":
                         // System.out.println("Matkahaku.hae()");

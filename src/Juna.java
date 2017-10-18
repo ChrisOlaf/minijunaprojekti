@@ -16,7 +16,7 @@ public class Juna {
 
     private boolean runningCurrently;
 
-    List<TimeTableRow> timeTableRows;
+    private List<TimeTableRow> timeTableRows;
     private Date timetableAcceptanceDate;
     private String timetableType;
 
@@ -49,10 +49,9 @@ public class Juna {
     public String getDepartureDate() {
 
         Locale fi = new Locale("fi", "FI");
-        DateFormat fiAika = DateFormat.getTimeInstance(DateFormat.SHORT, fi);
         DateFormat fiDate = DateFormat.getDateInstance(DateFormat.LONG, fi);
 
-        return fiAika.format(departureDate) + ", " + fiDate.format(departureDate);
+        return fiDate.format(departureDate);
 
     }
 
