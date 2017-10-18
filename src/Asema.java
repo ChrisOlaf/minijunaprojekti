@@ -2,10 +2,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Asema-luokka hakee haeAsemat()-metodilla kaikkien juna-asemien
@@ -32,6 +34,9 @@ public class Asema {
     // Juna-asemat listattuna MAP-listaan; avaimena on 2-3 -kirjaiminen aseman lyhenne ja arvona aseman koko nimi
     static public Map<String, String> asemat = new HashMap<>();
 
+    // Juna-asemien avaimet aakkosjärjestyksessä TreeSet-listalla
+    static public Set aakkosAsemat;
+
     // hakee asemat urlin perusteella ja lisää kaikista asemista lyhenteet ja täydet nimet asemat-MAP-listaan
     public static void haeAsemat() {
 
@@ -45,13 +50,28 @@ public class Asema {
 
             asemaoliot = mapper.readValue(url, tarkempiListanTyyppi);
 
+            // käy läpi asemaoliot ja lisää jokaisesta oliosta lyhenne ja koko nimi asemat-MAP-listaan
             for (Asema a : asemaoliot) {
                 asemat.put(a.getStationShortCode(), a.getStationName());
             }
 
+            // aseta aakkosAsemat-lista olemaan TreeSet asemat-listan avaimista
+            aakkosAsemat = new TreeSet(asemat.keySet());
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    // listaa kaikki asemat muodossa "lyhenne -- koko nimi"
+    public static void listaaAsemat() {
+
+        for (Object sobj : aakkosAsemat) {
+            String s = (String) sobj;
+            System.out.println(s + " -- " + asemat.get(s));
+        }
+        System.out.println("");
+
     }
 
     public int getStationUICCode() {
@@ -124,4 +144,5 @@ public class Asema {
     public void setPassengerTraffic(boolean passengerTraffic) {
         this.passengerTraffic = passengerTraffic;
     }
+
 }

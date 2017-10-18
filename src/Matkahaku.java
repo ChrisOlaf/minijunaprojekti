@@ -1,5 +1,3 @@
-
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,7 +25,7 @@ public class Matkahaku {
 
         kysyAsemat(in);
 
-        haeJunat();
+        haeJunat(in);
 
         printJunat();
 
@@ -40,8 +38,14 @@ public class Matkahaku {
         lahtoasema:
         for (;;) {
 
-            System.out.println("Mikä on matkan lähtöasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. HKI)");
+            System.out.println("Mikä on matkan lähtöasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. HKI)\n"
+                    + "Jos haluat nähdä listan asemien lyhenteistä ja nimistä, jätä asemakoodi tyhjäksi ja paina ENTER");
             lahtoAsema = in.nextLine().toUpperCase();
+
+            if ("".equals(lahtoAsema)) {
+                Asema.listaaAsemat();
+                continue;
+            }
 
             if (Asema.asemat.containsKey(lahtoAsema)) {
                 break lahtoasema;
@@ -58,6 +62,11 @@ public class Matkahaku {
 
             System.out.println("Mikä on matkan kohdeasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. TKU)");
             kohdeAsema = in.nextLine().toUpperCase();
+
+            if ("".equals(kohdeAsema)) {
+                Asema.listaaAsemat();
+                continue;
+            }
 
             if (Asema.asemat.containsKey(kohdeAsema)) {
                 break kohdeasema;
@@ -76,7 +85,7 @@ public class Matkahaku {
     // Varikko.LueJunanJsonData(String URL)
 
     // muodosta matkojen hakemisen URL-pääte syötteistä ja hae junat Varikko-luokan taulukkoon
-    private static void haeJunat() {
+    private static void haeJunat(Scanner in) {
 
         System.out.println("\nHaetaan junat "
                 + Asema.asemat.get(lahtoAsema)
@@ -87,11 +96,17 @@ public class Matkahaku {
                 + "Paina ENTER"
                 + "\n");
 
+        in.nextLine();
+
         // muodosta haettava url-pääte asemista
         String url = "/live-trains/station/" + lahtoAsema + "/" + kohdeAsema + "/";
 
         // hae uusin data Varikolle
-        Varikko.lueJunanJSONData(url);
+        try {
+            Varikko.lueJunanJSONData(url);
+        } catch (NullPointerException e) {
+            System.out.println("Tälle yhteydelle ei löytynyt ainuttakaan junaa.");
+        }
 
     }
 
@@ -99,10 +114,7 @@ public class Matkahaku {
     // eri tuloste riippuen onko kyseessä tunnuksellinen paikallisjuna vai pitkänmatkanjuna
     private static void printJunat() {
 
-        if (Varikko.junat.size() == 0) {
-            System.out.println("Tälle yhteydelle ei löytynyt ainuttakaan junaa.");
-            return;
-        }
+        if (Varikko.junat == null) return;
 
         for (Juna j : Varikko.junat) {
 
