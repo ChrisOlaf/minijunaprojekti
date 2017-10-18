@@ -7,6 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Asema-luokka hakee haeAsemat()-metodilla kaikkien juna-asemien
+ * tiedot JSON-tiedostona ja listaa tiedot asemaoliot-listaan sekä
+ * asemien lyhennenimet ja nimet MAP-listaan.
+ *
+ * @author Antti Pöyhönen
+ */
+
 // tarvittaessa: @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asema {
 
@@ -16,7 +24,7 @@ public class Asema {
     int stationUICCode;
 
     // asemien Liikennepaikkatiedot JSON url
-    static String baseurl = "https://rata.digitraffic.fi/api/v1/metadata/stations";
+    static String url = "https://rata.digitraffic.fi/api/v1/metadata/stations";
 
     // JSON-olioiden listan perustaminen
     static public List<Asema> asemaoliot;
@@ -24,11 +32,12 @@ public class Asema {
     // Juna-asemat listattuna MAP-listaan; avaimena on 2-3 -kirjaiminen aseman lyhenne ja arvona aseman koko nimi
     static public Map<String, String> asemat = new HashMap<>();
 
+    // hakee asemat urlin perusteella ja lisää kaikista asemista lyhenteet ja täydet nimet asemat-MAP-listaan
     public static void haeAsemat() {
 
         try {
 
-            URL url = new URL(baseurl);
+            URL url = new URL(url);
 
             ObjectMapper mapper = new ObjectMapper();
 
