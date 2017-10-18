@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Junahaku {
     /**
      * Haetaan junaa tyypin ja numeron yhdistelmällä.
+     * Tulostetaan onnistuneella haulla viimeisimmän junan tietoja.
      *
      * @author Risto Rautanen
      */
@@ -17,26 +18,30 @@ public class Junahaku {
         Scanner jnaScnr = new Scanner(System.in);
 
         junatunnus:
-        for (; ;) {
+        for (; ; ) {
 
             System.out.println("Löydä haluamasi junan aikataulu. Anna junan tunnus, esim: IC 404.");
             String jnaHaku = jnaScnr.nextLine().toUpperCase();
             jnaTyyppi = jnaHaku.replaceAll("[^A-Z]", "");
             jnaNumero = Integer.parseInt(jnaHaku.replaceAll("[^0-9]", ""));
-            System.out.println("Tehdään haku junatunnuksella: " + jnaTyyppi + jnaNumero + ".");
+            System.out.println("Tehdään haku junatunnuksella: " + jnaTyyppi + jnaNumero + ".\n");
 //            System.out.println(jnaTyyppi+jnaNumero);
             String url = "/trains/latest/" + jnaNumero;
-            Varikko.lueJunanJSONData(url);
+            System.out.println(url);
 
-            for (Juna j : Varikko.junat) {
-//                System.out.println("testi");
-                if ((j.getTrainType().equals(jnaTyyppi)) && (j.getTrainNumber() == jnaNumero)) {
-                    System.out.println(j.getTrainType() + j.getTrainNumber() + " lähtee " + j.departureDate);
+            Varikko.lueJunanJSONData(url);
+            if (Varikko.junat.size() == 0) {                    // Tarkistetaan onko junan numerolla taulukkoa.
+                System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.\n");
+                continue;
+            }
+
+            for (Juna j : Varikko.junat) {                      // Käydään läpi löytyykö junan tyyppi+numero -yhdistelmällä tietoa.
+                if (jnaTyyppi.equals(j.getTrainType()) && (jnaNumero == j.getTrainNumber())) {
+                    System.out.println(j.getTrainType() + j.getTrainNumber() + " lähtee " + j.getDepartureDate());
                     break junatunnus;
                 }
-                System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.");
-                continue;
-//                System.out.println("testi2");
+                System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.\n");
+                continue junatunnus;
             }
         }
     }
