@@ -2,9 +2,24 @@
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Matkahaku pyytää käyttäjältä syötteet matkan lähtöasemasta
+ * ja pääteasemasta.
+ *
+ * Syötteitä käytetään Varikko-luokan Varikko.lueJunanJSONData(URL)
+ * -haun ajamiseen sopivalla muodostetulla URL-syötteellä.
+ *
+ * Lopuksi tulostetaan lista junista kyseisellä matkavälillä
+ * seuraavan vuorokauden aikana.
+ *
+ * @author Antti Pöyhönen
+ */
+
 public class Matkahaku {
 
-    // Antti
+    // lähtöaseman ja kohdeaseman alustus oletus-syötteillä
+    private static String lahtoAsema = "TKU";
+    private static String kohdeAsema = "HKI";
 
     public static void hae() {
 
@@ -12,17 +27,25 @@ public class Matkahaku {
         // /live-trains/station/<departure_station_code>/<arrival_station_code>?departure_date=<departure_date>&from=<from>&to=<to>&limit=<limit>
         // Varikko.LueJunanJsonData(String URL)
         
-        Scanner matkalue = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
 
-        String lahtoAsema = "HKI";
-        String kohdeAsema = "TKU";
+        kysyAsemat(in);
+
+        haeJunat();
+
+        printJunat();
+
+    }
+
+    // kysy käyttäjältä kaksi syötettä, lähtöAsema ja kohdeAsema
+    private static void kysyAsemat(Scanner in) {
 
         // kysy lähtöasema
         lahtoasema:
         for (;;) {
 
             System.out.println("Mikä on matkan lähtöasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. HKI)");
-            lahtoAsema = matkalue.nextLine().toUpperCase();
+            lahtoAsema = in.nextLine().toUpperCase();
 
             if (Asema.asemat.containsKey(lahtoAsema)) {
                 break lahtoasema;
@@ -38,7 +61,7 @@ public class Matkahaku {
         for (;;) {
 
             System.out.println("Mikä on matkan kohdeasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. TKU)");
-            kohdeAsema = matkalue.nextLine().toUpperCase();
+            kohdeAsema = in.nextLine().toUpperCase();
 
             if (Asema.asemat.containsKey(kohdeAsema)) {
                 break kohdeasema;
@@ -48,6 +71,11 @@ public class Matkahaku {
             continue;
 
         }
+
+    }
+
+    // muodosta matkojen hakemisen URL-pääte syötteistä ja hae junat Varikko-luokan taulukkoon
+    private static void haeJunat() {
 
         System.out.println("\nHaetaan junat "
                 + Asema.asemat.get(lahtoAsema)
@@ -63,8 +91,11 @@ public class Matkahaku {
         // hae uusin data Varikolle
         Varikko.lueJunanJSONData(url);
 
-        // hae junien lista käyttöön paikalliseen muuttujaan
-        List<Juna> matkajunat = Varikko.junat;
+    }
+
+    // käy läpi Varikko-luokan junien haettu taulukko ja printtaa kaikki junat
+    // eri tuloste riippuen onko kyseessä tunnuksellinen paikallisjuna vai pitkänmatkanjuna
+    private static void printJunat() {
 
         for (Juna j : Varikko.junat) {
 
@@ -79,7 +110,7 @@ public class Matkahaku {
                         + "Saapuminen -- " + kohdeAsema + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime()
                         + "\n";
 
-            // muuten printtaa yleisessä muodossa junan numerolla
+                // muuten printtaa yleisessä muodossa junan numerolla
             } else {
 
                 print = "Juna " + j.getTrainType() + " " + j.getTrainNumber()

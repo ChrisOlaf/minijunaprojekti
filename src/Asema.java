@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// @JsonIgnoreProperties(ignoreUnknown = true)
+// tarvittaessa: @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asema {
 
     boolean passengerTraffic;
@@ -18,7 +18,7 @@ public class Asema {
     // asemien Liikennepaikkatiedot JSON url
     static String baseurl = "https://rata.digitraffic.fi/api/v1/metadata/stations";
 
-    // JSON-oliot listaan
+    // JSON-olioiden listan perustaminen
     static public List<Asema> asemaoliot;
 
     // Juna-asemat listattuna MAP-listaan; avaimena on 2-3 -kirjaiminen aseman lyhenne ja arvona aseman koko nimi

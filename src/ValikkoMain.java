@@ -1,8 +1,14 @@
 import java.util.Scanner;
 
-public class ValikkoMain {
+/**
+ * ValikkoMain aloittaa ohjelman, hakee asemien listan Asema-luokkaan
+ * kaikkien metodien myöhempää käyttöä varten, kysyy halutun haun tyypin
+ * ja ajaa halutun haun .hae()-metodin.
+ *
+ * @author Antti Pöyhönen
+ */
 
-    // Antti
+public class ValikkoMain {
 
     public static void main(String[] args) {
 
@@ -15,7 +21,6 @@ public class ValikkoMain {
         for (; ; ) {
 
             String valinta = "0";
-
 
             System.out.println("\nPäävalikko - Mitä haluat tehdä?\n\n"
                     + "1 -- Hae junan tiedot\n"
