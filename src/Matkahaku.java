@@ -1,3 +1,6 @@
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -23,7 +26,11 @@ public class Matkahaku {
 
         Scanner in = new Scanner(System.in);
 
-        kysyAsemat(in);
+        kysyAsema(in, "lähtöasema");
+
+        System.out.println("");
+
+        kysyAsema(in, "kohdeasema");
 
         haeJunat(in);
 
@@ -32,47 +39,34 @@ public class Matkahaku {
     }
 
     // kysy käyttäjältä kaksi syötettä, lähtöAsema ja kohdeAsema
-    private static void kysyAsemat(Scanner in) {
+    private static void kysyAsema(Scanner in, String s) {
 
-        // kysy lähtöasema
-        lahtoasema:
+        outer:
         for (;;) {
 
-            System.out.println("Mikä on matkan lähtöasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. HKI)\n"
+            System.out.println("Mikä on matkan " + s + "? (2-4 -kirjaiminen asemakoodi, esim. 'HKI')\n"
                     + "Jos haluat nähdä listan asemien lyhenteistä ja nimistä, jätä asemakoodi tyhjäksi ja paina ENTER");
-            lahtoAsema = in.nextLine().toUpperCase();
 
-            if ("".equals(lahtoAsema)) {
+            String check = "";
+
+            if ("lähtöasema".equals(s)) {
+                lahtoAsema = in.nextLine().toUpperCase();
+                check = lahtoAsema;
+            } else if ("kohdeasema".equals(s)) {
+                kohdeAsema = in.nextLine().toUpperCase();
+                check = kohdeAsema;
+            }
+
+            if ("".equals(check)) {
                 Asema.listaaAsemat();
                 continue;
             }
 
             if (Asema.asemat.containsKey(lahtoAsema)) {
-                break lahtoasema;
+                break outer;
             }
 
-            System.out.println("\nSyötä kaksi- tai kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).");
-            continue;
-
-        }
-
-        // kysy kohdeasema
-        kohdeasema:
-        for (;;) {
-
-            System.out.println("Mikä on matkan kohdeasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. TKU)");
-            kohdeAsema = in.nextLine().toUpperCase();
-
-            if ("".equals(kohdeAsema)) {
-                Asema.listaaAsemat();
-                continue;
-            }
-
-            if (Asema.asemat.containsKey(kohdeAsema)) {
-                break kohdeasema;
-            }
-
-            System.out.println("\nSyötä kaksi- tai kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).");
+            System.out.println("\nSyötä 2-4 -kirjaiminen koodi, esim. 'HKI' (Helsinki) tai 'tpe' (Tampere).");
             continue;
 
         }
@@ -93,8 +87,7 @@ public class Matkahaku {
                 +  Asema.asemat.get(kohdeAsema)
                 + " välillä seuraavaan vuorokauden aikana."
                 + "\n\n"
-                + "Paina ENTER"
-                + "\n");
+                + "Paina ENTER");
 
         in.nextLine();
 
@@ -114,31 +107,39 @@ public class Matkahaku {
 
         for (Juna j : Varikko.junat) {
 
-            String print;
+            // hakee liikkuuko juna jo
+            String liikkuu = "";
 
-            // jos junalla on paikallisjunan kirjaintunnus, printtaa paikallisjuna-muodossa
-            if (!("".equals(j.getCommuterLineID()))) {
-
-                print = j.getCommuterLineID() + "-juna"
-                        + ", Liikkeessä: " + j.isRunningCurrently() + "\n"
-                        + "Lähtö -- " + Asema.asemat.get(lahtoAsema) + ": " + j.timeTableRows.get(0).getScheduledTime() + "\n"
-                        + "Saapuminen -- " + Asema.asemat.get(kohdeAsema) + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime()
-                        + "\n";
-
-                // muuten printtaa yleisessä muodossa junan numerolla
+            if (j.isRunningCurrently()) {
+                liikkuu = "Lähtenyt";
             } else {
-
-                print = "Juna " + j.getTrainType() + " " + j.getTrainNumber()
-                        + ", Liikkeessä: " + j.isRunningCurrently() + "\n"
-                        + "Lähtö -- " + Asema.asemat.get(lahtoAsema) + ": " + j.timeTableRows.get(0).getScheduledTime() + "\n"
-                        + "Saapuminen -- " + Asema.asemat.get(kohdeAsema) + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime()
-                        + "\n";
-
+                liikkuu = "Ei vielä lähtenyt";
             }
 
-            System.out.println(print);
+            // jos junalla on paikallisjunan kirjaintunnus, printtaa paikallisjuna-muodossa
+            // muuten printtaa yleisessä muodossa junan numerolla
+            String junanNimi = "";
+
+            if (!("".equals(j.getCommuterLineID()))) {
+                junanNimi = j.getCommuterLineID() + "-juna";
+            } else {
+                junanNimi = "Juna " + j.getTrainType() + " " + j.getTrainNumber();
+            }
+
+            // hakee junan lähtöajat, lokalisoitu TimeTableRow getScheduledTime()-metodissa
+            String lahtoAika = j.timeTableRows.get(0).getScheduledTime();
+            String kohdeAika = j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime();
+
+            // printtaa koonnin kaikesta tiedosta
+            System.out.println(junanNimi
+                    + ", Liikkeessä: " + liikkuu + "\n"
+                    + "Lähtö -- " + Asema.asemat.get(lahtoAsema) + " -- " + lahtoAika + "\n"
+                    + "Saapuminen -- " + Asema.asemat.get(kohdeAsema) + " -- " + kohdeAika
+                    + "\n");
 
         }
+
+        System.out.println("Löytyi " + Varikko.junat.size() + " junaa.");
 
     }
 

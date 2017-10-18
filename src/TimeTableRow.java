@@ -1,18 +1,20 @@
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TimeTableRow {
 
-    boolean cancelled;
-    boolean commercialStop;
-    String commercialTrack;
-    Date scheduledTime;
-    String stationShortCode;
-    int stationUICCode;
-    boolean trainStopping;
-    String type;
+    private boolean cancelled;
+    private boolean commercialStop;
+    private String commercialTrack;
+    private Date scheduledTime;
+    private String stationShortCode;
+    private int stationUICCode;
+    private boolean trainStopping;
+    private String type;
 
     public boolean isCancelled() {
         return cancelled;
@@ -26,8 +28,14 @@ public class TimeTableRow {
         return commercialTrack;
     }
 
-    public Date getScheduledTime() {
-        return scheduledTime;
+    public String getScheduledTime() {
+
+        Locale fi = new Locale("fi", "FI");
+        DateFormat fiAika = DateFormat.getTimeInstance(DateFormat.SHORT, fi);
+        DateFormat fiDate = DateFormat.getDateInstance(DateFormat.LONG, fi);
+
+        return fiAika.format(scheduledTime) + ", " + fiDate.format(scheduledTime);
+
     }
 
     public String getStationShortCode() {

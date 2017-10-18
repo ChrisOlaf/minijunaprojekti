@@ -11,8 +11,9 @@ import java.util.HashMap;
 
 /**
  * Asema-luokka hakee haeAsemat()-metodilla kaikkien juna-asemien
- * tiedot JSON-tiedostona ja listaa tiedot asemaoliot-listaan sekä
- * asemien lyhennenimet ja nimet MAP-listaan.
+ * tiedot JSON-tiedostona sekä listaa asemien lyhennenimet ja
+ * nimet asemat-MAP-listaan. listaaAsemat() -metodi listaa
+ * asemien lyhenteet ja nimet aakkosjärjestyksessä.
  *
  * @author Antti Pöyhönen
  */

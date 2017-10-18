@@ -1,27 +1,29 @@
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Juna {
 
-    boolean cancelled;
-    String commuterLineID;
+    private boolean cancelled;
+    private String commuterLineID;
 
     //LocalDate departureDate;  // Jackson ei oikein pidä Java 8 päivistä oletuksena
-    Date departureDate;
+    private Date departureDate;
 
-    String operatorShortCode;
-    int operatorUICCode;
+    private String operatorShortCode;
+    private int operatorUICCode;
 
-    boolean runningCurrently;
+    private boolean runningCurrently;
 
     List<TimeTableRow> timeTableRows;
-    Date timetableAcceptanceDate;
-    String timetableType;
+    private Date timetableAcceptanceDate;
+    private String timetableType;
 
-    String trainCategory;
-    int trainNumber;
-    String trainType;
-    long version;
+    private String trainCategory;
+    private int trainNumber;
+    private String trainType;
+    private long version;
 
     @Override
     public String toString() {
@@ -44,8 +46,14 @@ public class Juna {
         this.commuterLineID = commuterLineID;
     }
 
-    public Date getDepartureDate() {
-        return departureDate;
+    public String getDepartureDate() {
+
+        Locale fi = new Locale("fi", "FI");
+        DateFormat fiAika = DateFormat.getTimeInstance(DateFormat.SHORT, fi);
+        DateFormat fiDate = DateFormat.getDateInstance(DateFormat.LONG, fi);
+
+        return fiAika.format(departureDate) + ", " + fiDate.format(departureDate);
+
     }
 
     public void setDepartureDate(Date departureDate) {

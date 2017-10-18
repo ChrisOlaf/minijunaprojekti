@@ -28,19 +28,17 @@ public class Varikko {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
+            CollectionType tyypitys = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Juna.class);
 
-            junat = mapper.readValue(url, tarkempiListanTyyppi);  // pelkkä List.class ei riitä tyypiksi
+            junat = mapper.readValue(url, tyypitys);
 
-//            System.out.println(junat.get(0).getTrainNumber());
+            // käyttönä esimerkiksi:
 
-//            Seuraavaa varten on toteutettava TimeTableRow luokka:
-//            System.out.println(junat.get(0).getTimeTableRows().get(0).getScheduledTime());
+            // System.out.println(Varikko.junat.get(0).getTrainNumber());
+            // System.out.println(Varikko.junat.get(0).getTimeTableRows().get(0).getScheduledTime());
+            // System.out.println(Varikko.junat.get(0));
 
-//            System.out.println("\n\n");
-//            System.out.println(junat.get(0));
-
-        } catch (Exception ex) {
+        } catch (Exception e) {
             // System.out.println("Data ei saanut Lukea.");
             System.out.println("Tällä haulla ei löytynyt mitään tietoja.");
         }
