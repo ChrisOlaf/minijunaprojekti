@@ -15,10 +15,13 @@ public class Asema {
     double latitude, longitude;
     int stationUICCode;
 
-    // asemien Liikennepaikkatiedot
+    // asemien Liikennepaikkatiedot JSON url
     static String baseurl = "https://rata.digitraffic.fi/api/v1/metadata/stations";
 
+    // JSON-oliot listaan
     static public List<Asema> asemaoliot;
+
+    // Juna-asemat listattuna MAP-listaan; avaimena on 2-3 -kirjaiminen aseman lyhenne ja arvona aseman koko nimi
     static public Map<String, String> asemat = new HashMap<>();
 
     public static void haeAsemat() {

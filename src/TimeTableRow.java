@@ -46,5 +46,4 @@ public class TimeTableRow {
         return type;
     }
 
-    //haeJuna();  ?
 }

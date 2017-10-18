@@ -21,7 +21,7 @@ public class Matkahaku {
         lahtoasema:
         for (;;) {
 
-            System.out.println("Mikä on lähtöasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. HKI)");
+            System.out.println("Mikä on matkan lähtöasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. HKI)");
             lahtoAsema = matkalue.nextLine().toUpperCase();
 
             if (Asema.asemat.containsKey(lahtoAsema)) {
@@ -37,10 +37,10 @@ public class Matkahaku {
         kohdeasema:
         for (;;) {
 
-            System.out.println("Mikä on kohdeasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. TKU)");
+            System.out.println("Mikä on matkan kohdeasema? (kaksi- tai kolmikirjaiminen asemakoodi, esim. TKU)");
             kohdeAsema = matkalue.nextLine().toUpperCase();
 
-            if (Asema.asemat.containsKey(lahtoAsema)) {
+            if (Asema.asemat.containsKey(kohdeAsema)) {
                 break kohdeasema;
             }
 
@@ -49,7 +49,7 @@ public class Matkahaku {
 
         }
 
-        System.out.println("\nHaetaan junat asemien "
+        System.out.println("\nHaetaan junat "
                 + Asema.asemat.get(lahtoAsema)
                 + " ja "
                 +  Asema.asemat.get(kohdeAsema)
@@ -57,6 +57,7 @@ public class Matkahaku {
 
         System.out.println("");
 
+        // muodosta haettava url-pääte asemista
         String url = "/live-trains/station/" + lahtoAsema + "/" + kohdeAsema;
 
         // hae uusin data Varikolle
@@ -69,6 +70,7 @@ public class Matkahaku {
 
             String print;
 
+            // jos junalla on paikallisjunan kirjaintunnus, printtaa paikallisjuna-muodossa
             if (!("".equals(j.getCommuterLineID()))) {
 
                 print = j.getCommuterLineID() + "-juna"
@@ -77,6 +79,7 @@ public class Matkahaku {
                         + "Saapuminen -- " + kohdeAsema + ": " + j.timeTableRows.get(j.timeTableRows.size() - 1).getScheduledTime()
                         + "\n";
 
+            // muuten printtaa yleisessä muodossa junan numerolla
             } else {
 
                 print = "Juna " + j.getTrainType() + " " + j.getTrainNumber()
