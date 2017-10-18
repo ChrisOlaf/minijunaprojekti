@@ -41,8 +41,8 @@ public class Varikko {
 //            System.out.println(junat.get(0));
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Data ei saanut Lukea.");
+            // System.out.println("Data ei saanut Lukea.");
+            System.out.println("Tällä haulla ei löytynyt mitään tietoja.");
         }
     }
 }

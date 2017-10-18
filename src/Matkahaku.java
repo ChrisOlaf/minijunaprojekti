@@ -102,11 +102,7 @@ public class Matkahaku {
         String url = "/live-trains/station/" + lahtoAsema + "/" + kohdeAsema + "/";
 
         // hae uusin data Varikolle
-        try {
-            Varikko.lueJunanJSONData(url);
-        } catch (NullPointerException e) {
-            System.out.println("Tälle yhteydelle ei löytynyt ainuttakaan junaa.");
-        }
+        Varikko.lueJunanJSONData(url);
 
     }
 
