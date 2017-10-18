@@ -24,7 +24,7 @@ public class Asema {
     int stationUICCode;
 
     // asemien Liikennepaikkatiedot JSON url
-    static String url = "https://rata.digitraffic.fi/api/v1/metadata/stations";
+    static String link = "https://rata.digitraffic.fi/api/v1/metadata/stations";
 
     // JSON-olioiden listan perustaminen
     static public List<Asema> asemaoliot;
@@ -37,7 +37,7 @@ public class Asema {
 
         try {
 
-            URL url = new URL(url);
+            URL url = new URL(link);
 
             ObjectMapper mapper = new ObjectMapper();
 
