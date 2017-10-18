@@ -13,27 +13,31 @@ public class Junahaku {
     static public void hae() {
 
         String jnaTyyppi = "IC";
-        int jnaNumero = 6;
+        int jnaNumero = 404;
         Scanner jnaScnr = new Scanner(System.in);
 
         junatunnus:
-        for (;;) {
+        for (; ;) {
 
-            System.out.println("Löydä haluamasi junan aikataulu. Anna junan tunnus, esim: " +jnaTyyppi+jnaNumero);
+            System.out.println("Löydä haluamasi junan aikataulu. Anna junan tunnus, esim: IC 404.");
             String jnaHaku = jnaScnr.nextLine().toUpperCase();
             jnaTyyppi = jnaHaku.replaceAll("[^A-Z]", "");
             jnaNumero = Integer.parseInt(jnaHaku.replaceAll("[^0-9]", ""));
+            System.out.println("Tehdään haku junatunnuksella: " + jnaTyyppi + jnaNumero + ".");
 //            System.out.println(jnaTyyppi+jnaNumero);
+            String url = "/trains/latest/" + jnaNumero;
+            Varikko.lueJunanJSONData(url);
 
             for (Juna j : Varikko.junat) {
+//                System.out.println("testi");
                 if ((j.getTrainType().equals(jnaTyyppi)) && (j.getTrainNumber() == jnaNumero)) {
-                    System.out.println(j);
+                    System.out.println(j.getTrainType() + j.getTrainNumber() + " lähtee " + j.departureDate);
+                    break junatunnus;
                 }
+                System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.");
+                continue;
+//                System.out.println("testi2");
             }
-
-
         }
-
     }
-
 }
