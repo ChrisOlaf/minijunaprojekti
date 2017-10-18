@@ -128,7 +128,7 @@ public class Matkahaku {
 
             // hakee junan lähtöajat, lokalisoitu TimeTableRow getScheduledTime()-metodissa
             String lahtoAika = j.getTimeTableRows().get(0).getScheduledTime();
-            String kohdeAika = j.getTimeTableRows().get(j.timeTableRows.size() - 1).getScheduledTime();
+            String kohdeAika = j.getTimeTableRows().get(j.getTimeTableRows().size() - 1).getScheduledTime();
 
             // printtaa koonnin kaikesta tiedosta
             System.out.println(junanNimi
