@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.TreeMap;
 
 public class Junahaku {
     /**
@@ -8,17 +7,18 @@ public class Junahaku {
      *
      * @author Risto Rautanen
      */
-    public static void main(String[] args) {
-        Asema.haeAsemat();
-        hae();
-    }
+
+//    public static void main(String[] args) {
+//        Asema.haeAsemat();
+//        hae();
+//    }
 
     static public void hae() {
 
         String jnaTyyppi = "IC";
         int jnaNumero = 404;
         Scanner jnaScnr = new Scanner(System.in);
-        System.out.println("Löydä haluamasi junan aikataulu. Anna junan tunnus, esim: IC 404.");
+        System.out.println("Hae junan tapahtumatietoja junan tunnuksella. Anna junan tunnus, esim: IC 404.");
 
         junatunnus:
         for (; ; ) {
@@ -28,7 +28,7 @@ public class Junahaku {
             try {
                 jnaNumero = Integer.parseInt(jnaHaku.replaceAll("[^0-9]", ""));
             } catch (NumberFormatException e) {
-                System.out.println("Junan numero puuttui. Yritä uudelleen!\n");
+                System.out.println("*** Junan numero puuttui.\n*** Anna tunnus uudelleen!\n");
                 continue;
             }
             System.out.println("Tehdään haku junatunnuksella: " + jnaTyyppi + jnaNumero + ".\n");
@@ -37,16 +37,17 @@ public class Junahaku {
             Varikko.lueJunanJSONData(url);
 
             if (Varikko.junat.size() == 0) {                    // Tarkistetaan onko junan numerolla taulukkoa.
-                System.out.println("Antamallasi junan numerolla ei löytynyt junaa. Anna tunnus uudelleen.\n");
+                System.out.println("*** Antamallasi junan numerolla ei löytynyt junaa.\n*** Anna tunnus uudelleen.\n");
                 continue;
             }
 
             for (Juna j : Varikko.junat) {                      // Käydään läpi löytyykö junan tyyppi+numero -yhdistelmällä tietoa.
                 if (jnaTyyppi.equals(j.getTrainType()) && (jnaNumero == j.getTrainNumber())) {
                     String jnaTunnus = jnaTyyppi + jnaNumero;
-                    String jnaAsema1 = "";
-                    String jnaAsema2 = "";
-                    String jnaAika = "";
+                    String jnaAsema1 = "", jnaAsema2 = "";
+                    String jnaAika1 = "", jnaAika2 = "";
+                    String jnaTapahtuma1 = "", jnaTapahtuma2 = "";
+                    String jnaRaide1 = "", jnaRaide2 = "";
                     Date current = new Date();
                     TreeMap<Long, String> jnaMenneet = new TreeMap<>();
                     TreeMap<Long, String> jnaTulevat = new TreeMap<>();
@@ -58,22 +59,53 @@ public class Junahaku {
                         Long aika = (current.getTime()) - (t.getTime().getTime());
                         if (aika > 0.00) {
                             jnaMenneet.put(aika, t.getStationShortCode());
-                        } else {
+                        } else if (aika <= 0.00){
                             jnaTulevat.put(Math.abs(aika), t.getStationShortCode());
                         }
 
                     }
 
-                    jnaAsema1 = jnaMenneet.get(jnaMenneet.firstKey());
-                    jnaAsema2 = jnaTulevat.get(jnaTulevat.firstKey());
+                    try {
+                        jnaAsema1 = jnaMenneet.get(jnaMenneet.firstKey());
+                        jnaAsema2 = jnaTulevat.get(jnaTulevat.firstKey());
+                    } catch (Exception e) {
+                        System.out.println("*** Antamallasi junatunnuksella ei löydy aktiivisia junia.\n*** Anna tunnus uudelleen.\n");
+                        break;
+                    }
 
                     for (TimeTableRow t : j.getTimeTableRows()) {
-                        if (t.getStationShortCode().equals(jnaAsema1) && t.getType().equals("ARRIVAL")) {
-                            jnaAika = t.getActualTime();
+                        if (t.getTime().getTime() > current.getTime()) {
+                            break;
+                        }
+                        if (t.getStationShortCode().equals(jnaAsema1) /*&& t.getType().equals("ARRIVAL")*/) {
+                            jnaAika1 = t.getActualTime();
+                            jnaTapahtuma1 = t.getType();
+                            jnaRaide1 = t.getCommercialTrack();
                         }
                     }
 
-                    System.out.println(jnaTunnus + "lähtee " + jnaAika + " asemalta: " + jnaAsema1);
+                    for (TimeTableRow t : j.getTimeTableRows()) {
+                        if (t.getStationShortCode().equals(jnaAsema2) /*&& t.getType().equals("DEPARTURE")*/) {
+                            jnaAika2 = t.getActualTime();
+                            jnaTapahtuma2 = t.getType();
+                            jnaRaide2 = t.getCommercialTrack();
+                            break;
+                        }
+                    }
+
+
+                    System.out.println(jnaTunnus
+                            + "\n* * *\nViimeisin tapahtuma: "+ jnaTapahtuma1
+                            + " / "+ jnaAika1
+                            + " / Asemalla: " + jnaAsema1
+                            + " - "+ Asema.asemat.get(jnaAsema1)
+                            + ", Raide: " + jnaRaide1
+                            + "\nSeuraava tapahtuma: "+ jnaTapahtuma2
+                            + " / "+ jnaAika2
+                            + " / Asemalla: " + jnaAsema2
+                            + " - "+ Asema.asemat.get(jnaAsema2)
+                            + ", Raide: " + jnaRaide2
+                    );
 
 //                        System.out.println(j.getTrainType() + j.getTrainNumber()
 //                                + " lähtee " + j.getTimeTableRows().get().getScheduledTime()
@@ -82,7 +114,7 @@ public class Junahaku {
 
                     break junatunnus;
                 }
-                System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.\n");
+                System.out.println("*** Antamallasi tunnuksella ei löytynyt junaa.\n*** Anna tunnus uudelleen.\n");
                 continue junatunnus;
             }
         }

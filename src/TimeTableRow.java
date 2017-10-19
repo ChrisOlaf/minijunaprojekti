@@ -16,9 +16,12 @@ public class TimeTableRow {
     private boolean trainStopping;
     private String type;
     private Date actualTime;
+    private Date liveEstimateTime;
 
     public Date getTime() {
-        if (actualTime != null) {
+        if (liveEstimateTime != null) {
+            return liveEstimateTime;
+        } else if (actualTime != null) {
             return actualTime;
         } else {
             return scheduledTime;
