@@ -3,7 +3,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Juna {
+public class Juna  {
 
     private boolean cancelled;
     private String commuterLineID;
@@ -24,6 +24,11 @@ public class Juna {
     private int trainNumber;
     private String trainType;
     private long version;
+
+    //@Override
+    //public int compareTo(Juna o) {
+    //    return getTimeTableRows().get(i).getScheduledTime().compareTo(o.getTimeTableRows().get(i).getScheduledTime());
+    //}
 
     @Override
     public String toString() {
