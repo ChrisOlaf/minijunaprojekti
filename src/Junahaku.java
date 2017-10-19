@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.TreeMap;
 
 public class Junahaku {
     /**
@@ -44,9 +43,8 @@ public class Junahaku {
             for (Juna j : Varikko.junat) {                      // Käydään läpi löytyykö junan tyyppi+numero -yhdistelmällä tietoa.
                 if (jnaTyyppi.equals(j.getTrainType()) && (jnaNumero == j.getTrainNumber())) {
                     String jnaTunnus = jnaTyyppi + jnaNumero;
-                    String jnaAsema1 = "";
-                    String jnaAsema2 = "";
-                    String jnaAika = "";
+                    String jnaAsema1 = "", jnaAsema2 = "";
+                    String jnaAika1 = "", jnaAika2 = "";
                     Date current = new Date();
                     TreeMap<Long, String> jnaMenneet = new TreeMap<>();
                     TreeMap<Long, String> jnaTulevat = new TreeMap<>();
@@ -69,11 +67,22 @@ public class Junahaku {
 
                     for (TimeTableRow t : j.getTimeTableRows()) {
                         if (t.getStationShortCode().equals(jnaAsema1) && t.getType().equals("ARRIVAL")) {
-                            jnaAika = t.getActualTime();
+                            jnaAika1 = t.getActualTime();
                         }
                     }
 
-                    System.out.println(jnaTunnus + "lähtee " + jnaAika + " asemalta: " + jnaAsema1);
+                    for (TimeTableRow t : j.getTimeTableRows()) {
+                        if (t.getStationShortCode().equals(jnaAsema2) && t.getType().equals("DEPARTURE")) {
+                            jnaAika2 = t.getActualTime();
+                        }
+                    }
+
+
+                    System.out.println(jnaTunnus
+                            + "\n* * *\nViimeisin tapahtuma " + jnaAika1
+                            + " asemalta: " + jnaAsema1
+                            + "\nSaapuu " + jnaAika2
+                            + " asemalle: " + jnaAsema2);
 
 //                        System.out.println(j.getTrainType() + j.getTrainNumber()
 //                                + " lähtee " + j.getTimeTableRows().get().getScheduledTime()
