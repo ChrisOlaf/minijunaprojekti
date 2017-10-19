@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -18,7 +19,7 @@ import java.util.HashMap;
  * @author Antti Pöyhönen
  */
 
-// tarvittaessa: @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Asema {
 
     private boolean passengerTraffic;
