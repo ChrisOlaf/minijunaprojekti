@@ -7,10 +7,11 @@ public class Junahaku {
      *
      * @author Risto Rautanen
      */
-    public static void main(String[] args) {
-        Asema.haeAsemat();
-        hae();
-    }
+
+//    public static void main(String[] args) {
+//        Asema.haeAsemat();
+//        hae();
+//    }
 
     static public void hae() {
 
@@ -58,7 +59,7 @@ public class Junahaku {
                         Long aika = (current.getTime()) - (t.getTime().getTime());
                         if (aika > 0.00) {
                             jnaMenneet.put(aika, t.getStationShortCode());
-                        } else {
+                        } else if (aika <= 0.00){
                             jnaTulevat.put(Math.abs(aika), t.getStationShortCode());
                         }
 
@@ -73,6 +74,9 @@ public class Junahaku {
                     }
 
                     for (TimeTableRow t : j.getTimeTableRows()) {
+                        if (t.getTime().getTime() > current.getTime()) {
+                            break;
+                        }
                         if (t.getStationShortCode().equals(jnaAsema1) /*&& t.getType().equals("ARRIVAL")*/) {
                             jnaAika1 = t.getActualTime();
                             jnaTapahtuma1 = t.getType();
@@ -85,6 +89,7 @@ public class Junahaku {
                             jnaAika2 = t.getActualTime();
                             jnaTapahtuma2 = t.getType();
                             jnaRaide2 = t.getCommercialTrack();
+                            break;
                         }
                     }
 
