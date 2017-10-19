@@ -8,6 +8,7 @@ public class Junahaku {
      * @author Risto Rautanen
      */
     public static void main(String[] args) {
+        Asema.haeAsemat();
         hae();
     }
 
@@ -35,13 +36,17 @@ public class Junahaku {
             Varikko.lueJunanJSONData(url);
 
             if (Varikko.junat.size() == 0) {                    // Tarkistetaan onko junan numerolla taulukkoa.
-                System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.\n");
+                System.out.println("Antamallasi junan numerolla ei löytynyt junaa. Anna tunnus uudelleen.\n");
                 continue;
             }
 
             for (Juna j : Varikko.junat) {                      // Käydään läpi löytyykö junan tyyppi+numero -yhdistelmällä tietoa.
                 if (jnaTyyppi.equals(j.getTrainType()) && (jnaNumero == j.getTrainNumber())) {
-                    System.out.println(j.getTrainType() + j.getTrainNumber() + " lähtee " + j.getTimeTableRows().get(0).getScheduledTime());
+                    String jasema = j.getTimeTableRows().get(0).getStationShortCode();
+                    System.out.println(j.getTrainType() + j.getTrainNumber()
+                            + " lähtee " + j.getTimeTableRows().get(0).getScheduledTime()
+                            + " asemalta: " + Asema.asemat.get(jasema)
+                            + " / " + jasema + ".");
                     break junatunnus;
                 }
                 System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.\n");
