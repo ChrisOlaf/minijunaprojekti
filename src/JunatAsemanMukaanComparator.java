@@ -13,7 +13,6 @@ class JunatAsemanMukaanComparator implements Comparator<Juna> {
                 aAika = t.getTime();
             }
         }
-
         for  (TimeTableRow t : b.getTimeTableRows()) {
             if (t.getStationShortCode().equals(asema)) {
                 bAika = t.getTime();

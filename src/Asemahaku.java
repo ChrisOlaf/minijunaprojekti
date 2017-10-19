@@ -62,6 +62,7 @@ public class Asemahaku {
         Varikko.lueJunanJSONData(url);
         // hae junien lista käyttöön paikalliseen muuttujaan
         List<Juna> asemaJunat = Varikko.junat;
+        Collections.sort(asemaJunat, new JunatAsemanMukaanComparator());
         //Filtteröidään asemalta lähtevät junat.
         // Tulostetaan tiedot:
         //1. Junan koodinimi: trainType + trainNumber (Juna)
@@ -98,7 +99,8 @@ public class Asemahaku {
 
         // hae junien lista käyttöön paikalliseen muuttujaan
         List<Juna> asemaJunat = Varikko.junat;
-    //    Collections.sort(asemaJunat);
+        Collections.sort(asemaJunat, new JunatAsemanMukaanComparator());
+        //    Collections.sort(asemaJunat);
 
         //Filtteröidään asemalle saapuvat junat.
         //Tulostetaan tiedot:
