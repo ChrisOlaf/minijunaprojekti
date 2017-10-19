@@ -15,6 +15,43 @@ public class TimeTableRow {
     private int stationUICCode;
     private boolean trainStopping;
     private String type;
+    private Date actualTime;
+
+    public Date getTime() {
+        if (actualTime != null) {
+            return actualTime;
+        } else {
+            return scheduledTime;
+        }
+    }
+
+    public String getActualTime() {
+
+        Locale fi = new Locale("fi", "FI");
+        DateFormat fiAika = DateFormat.getTimeInstance(DateFormat.SHORT, fi);
+        DateFormat fiDate = DateFormat.getDateInstance(DateFormat.LONG, fi);
+
+        if (actualTime != null) {
+            return fiAika.format(actualTime) + ", " + fiDate.format(actualTime);
+        } else {
+            return this.getScheduledTime();
+        }
+
+    }
+
+    public String getScheduledTime() {
+
+        Locale fi = new Locale("fi", "FI");
+        DateFormat fiAika = DateFormat.getTimeInstance(DateFormat.SHORT, fi);
+        DateFormat fiDate = DateFormat.getDateInstance(DateFormat.LONG, fi);
+
+        return fiAika.format(scheduledTime) + ", " + fiDate.format(scheduledTime);
+
+    }
+
+    public void setActualTime(Date actualTime) {
+        this.actualTime = actualTime;
+    }
 
     public boolean isCancelled() {
         return cancelled;
@@ -26,16 +63,6 @@ public class TimeTableRow {
 
     public String getCommercialTrack() {
         return commercialTrack;
-    }
-
-    public String getScheduledTime() {
-
-        Locale fi = new Locale("fi", "FI");
-        DateFormat fiAika = DateFormat.getTimeInstance(DateFormat.SHORT, fi);
-        DateFormat fiDate = DateFormat.getDateInstance(DateFormat.LONG, fi);
-
-        return fiAika.format(scheduledTime) + ", " + fiDate.format(scheduledTime);
-
     }
 
     public String getStationShortCode() {

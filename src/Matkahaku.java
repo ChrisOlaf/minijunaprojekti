@@ -126,12 +126,13 @@ public class Matkahaku {
                 junanNimi = "Juna " + j.getTrainType() + " " + j.getTrainNumber();
             }
 
-            // hakee junan lähtö- ja saapumisajat, lokalisoitu TimeTableRow getScheduledTime()-metodissa
+            // hakee junan lähtö- ja saapumisajat, lokalisoitu TimeTableRow luokan gettereissä
             String lahtoAika = "", kohdeAika = "";
 
             for (TimeTableRow t : j.getTimeTableRows()) {
                 if (lahtoAsema.equals(t.getStationShortCode()) && "DEPARTURE".equals(t.getType())) {
-                    lahtoAika = t.getScheduledTime();
+                    // t.getActualTime() -metodi palauttaa actualTimen, jos != null, muuten palauttaa scheduledTimen
+                    lahtoAika = t.getActualTime();
                 }
             }
 
