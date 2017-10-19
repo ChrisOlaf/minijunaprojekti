@@ -1,6 +1,12 @@
 import java.util.Comparator;
 import java.util.Date;
-
+/**
+ *
+ *Luokkaa käytetään, jotta asemahaussa saadut junat saadaan järjestettyä ajan mukaan.
+ *
+ *
+ * @author Titta Kivikoski
+ */
 class JunatAsemanMukaanComparator implements Comparator<Juna> {
     @Override
     public int compare(Juna a, Juna b) {
