@@ -38,7 +38,7 @@ public class Matkahaku {
 
     }
 
-    // kysy käyttäjältä kaksi syötettä, lähtöAsema ja kohdeAsema
+    // kysyy käyttäjältä annetun aseman s syötteen
     private static void kysyAsema(Scanner in, String s) {
 
         outer:
@@ -81,7 +81,7 @@ public class Matkahaku {
     // muodosta matkojen hakemisen URL-pääte syötteistä ja hae junat Varikko-luokan taulukkoon
     private static void haeJunat(Scanner in) {
 
-        System.out.println("\nHaetaan junat "
+        System.out.println("\nHaetaan junat asemien "
                 + Asema.asemat.get(lahtoAsema)
                 + " ja "
                 +  Asema.asemat.get(kohdeAsema)
@@ -103,8 +103,10 @@ public class Matkahaku {
     // eri tuloste riippuen onko kyseessä tunnuksellinen paikallisjuna vai pitkänmatkanjuna
     private static void printJunat() {
 
+        // jos dataa ei ole, lopettaa tulostuksen metodi
         if (Varikko.junat == null) return;
 
+        // käy läpi junien lista
         for (Juna j : Varikko.junat) {
 
             // hakee liikkuuko juna jo
@@ -131,7 +133,7 @@ public class Matkahaku {
 
             for (TimeTableRow t : j.getTimeTableRows()) {
                 if (lahtoAsema.equals(t.getStationShortCode()) && "DEPARTURE".equals(t.getType())) {
-                    // t.getActualTime() -metodi palauttaa actualTimen, jos != null, muuten palauttaa scheduledTimen
+                    // t.getActualTime() -metodi palauttaa actualTimen, jos != null; muuten palauttaa scheduledTimen
                     lahtoAika = t.getActualTime();
                 }
             }

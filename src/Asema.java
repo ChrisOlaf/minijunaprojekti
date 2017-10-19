@@ -21,22 +21,22 @@ import java.util.HashMap;
 // tarvittaessa: @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asema {
 
-    boolean passengerTraffic;
-    String countryCode, stationName, stationShortCode, type;
-    double latitude, longitude;
-    int stationUICCode;
+    private boolean passengerTraffic;
+    private String countryCode, stationName, stationShortCode, type;
+    private double latitude, longitude;
+    private int stationUICCode;
 
     // asemien Liikennepaikkatiedot JSON url
-    static String link = "https://rata.digitraffic.fi/api/v1/metadata/stations";
+    private static String link = "https://rata.digitraffic.fi/api/v1/metadata/stations";
 
     // JSON-olioiden listan perustaminen
-    static public List<Asema> asemaoliot;
+    public static List<Asema> asemaoliot;
 
     // Juna-asemat listattuna MAP-listaan; avaimena on 2-3 -kirjaiminen aseman lyhenne ja arvona aseman koko nimi
-    static public Map<String, String> asemat = new HashMap<>();
+    public static Map<String, String> asemat = new HashMap<>();
 
     // Juna-asemien avaimet aakkosjärjestyksessä TreeSet-listalla
-    static public Set aakkosAsemat;
+    public static Set aakkosAsemat;
 
     // hakee asemat urlin perusteella ja lisää kaikista asemista lyhenteet ja täydet nimet asemat-MAP-listaan
     public static void haeAsemat() {
@@ -53,7 +53,11 @@ public class Asema {
 
             // käy läpi asemaoliot ja lisää jokaisesta oliosta lyhenne ja koko nimi asemat-MAP-listaan
             for (Asema a : asemaoliot) {
-                asemat.put(a.getStationShortCode(), a.getStationName());
+
+                // korvaa asemien koko nimistä " asema" pois
+                String asemaNimi = a.getStationName().replaceFirst(" asema", "");
+
+                asemat.put(a.getStationShortCode(), asemaNimi);
             }
 
             // aseta aakkosAsemat-lista olemaan TreeSet asemat-listan avaimista
@@ -75,30 +79,18 @@ public class Asema {
 
     }
 
-    public int getStationUICCode() {
-        return stationUICCode;
+    public String getStationShortCode() {
+
+        return stationShortCode;
     }
 
-    public void setStationUICCode(int stationUICCode) {
-        this.stationUICCode = stationUICCode;
+    public static Set getAakkosAsemat() {
+        return aakkosAsemat;
     }
 
-    public double getLongitude() {
+    public static Map<String, String> getAsemat() {
 
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        return asemat;
     }
 
     public String getType() {
@@ -106,44 +98,8 @@ public class Asema {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getStationShortCode() {
-
-        return stationShortCode;
-    }
-
-    public void setStationShortCode(String stationShortCode) {
-        this.stationShortCode = stationShortCode;
-    }
-
     public String getStationName() {
 
         return stationName;
     }
-
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
-    }
-
-    public String getCountryCode() {
-
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public boolean isPassengerTraffic() {
-
-        return passengerTraffic;
-    }
-
-    public void setPassengerTraffic(boolean passengerTraffic) {
-        this.passengerTraffic = passengerTraffic;
-    }
-
 }
