@@ -25,11 +25,6 @@ public class Juna  {
     private String trainType;
     private long version;
 
-    //@Override
-    //public int compareTo(Juna o) {
-    //    return getTimeTableRows().get(i).getScheduledTime().compareTo(o.getTimeTableRows().get(i).getScheduledTime());
-    //}
-
     @Override
     public String toString() {
         return "Juna{" + "cancelled=" + cancelled + ", commuterLineID='" + commuterLineID + '\'' + ", departureDate=" + departureDate + ", operatorShortCode='" + operatorShortCode + '\'' + ", operatorUICCode=" + operatorUICCode + ", runningCurrently=" + runningCurrently + ", timeTableRows=" + timeTableRows + ", timetableAcceptanceDate=" + timetableAcceptanceDate + ", timetableType='" + timetableType + '\'' + ", trainCategory='" + trainCategory + '\'' + ", trainNumber=" + trainNumber + ", trainType='" + trainType + '\'' + ", version=" + version + '}';
