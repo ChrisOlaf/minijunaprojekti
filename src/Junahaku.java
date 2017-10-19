@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.util.*;
+import java.util.TreeMap;
 
 public class Junahaku {
     /**
@@ -42,11 +43,43 @@ public class Junahaku {
 
             for (Juna j : Varikko.junat) {                      // Käydään läpi löytyykö junan tyyppi+numero -yhdistelmällä tietoa.
                 if (jnaTyyppi.equals(j.getTrainType()) && (jnaNumero == j.getTrainNumber())) {
-                    String jasema = j.getTimeTableRows().get(0).getStationShortCode();
-                    System.out.println(j.getTrainType() + j.getTrainNumber()
-                            + " lähtee " + j.getTimeTableRows().get(0).getScheduledTime()
-                            + " asemalta: " + Asema.asemat.get(jasema)
-                            + " / " + jasema + ".");
+                    String jnaTunnus = jnaTyyppi + jnaNumero;
+                    String jnaAsema1 = "";
+                    String jnaAsema2 = "";
+                    String jnaAika = "";
+                    Date current = new Date();
+                    TreeMap<Long, String> jnaMenneet = new TreeMap<>();
+                    TreeMap<Long, String> jnaTulevat = new TreeMap<>();
+
+                    for (TimeTableRow t : j.getTimeTableRows()) {
+                        if (t.isTrainStopping() == false) {
+                            continue;
+                        }
+                        Long aika = (current.getTime()) - (t.getTime().getTime());
+                        if (aika > 0.00) {
+                            jnaMenneet.put(aika, t.getStationShortCode());
+                        } else {
+                            jnaTulevat.put(Math.abs(aika), t.getStationShortCode());
+                        }
+
+                    }
+
+                    jnaAsema1 = jnaMenneet.get(jnaMenneet.firstKey());
+                    jnaAsema2 = jnaTulevat.get(jnaTulevat.firstKey());
+
+                    for (TimeTableRow t : j.getTimeTableRows()) {
+                        if (t.getStationShortCode().equals(jnaAsema1) && t.getType().equals("ARRIVAL")) {
+                            jnaAika = t.getActualTime();
+                        }
+                    }
+
+                    System.out.println(jnaTunnus + "lähtee " + jnaAika + " asemalta: " + jnaAsema1);
+
+//                        System.out.println(j.getTrainType() + j.getTrainNumber()
+//                                + " lähtee " + j.getTimeTableRows().get().getScheduledTime()
+//                                + " asemalta: " + Asema.asemat.get(j.getTimeTableRows().get(0).getStationShortCode())
+//                                + " / " + jnaAsema + ".");
+
                     break junatunnus;
                 }
                 System.out.println("Antamallasi tunnuksella ei löytynyt junaa. Anna tunnus uudelleen.\n");
