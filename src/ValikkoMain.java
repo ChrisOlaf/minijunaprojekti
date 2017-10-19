@@ -52,7 +52,8 @@ public class ValikkoMain {
                         in.nextLine();
                         break end;
                     default:
-                        System.out.println("Et valinnut valintaa 1, 2, 3 tai 0. Valitse uudelleen!\n");
+                        System.out.println("Et valinnut valintaa 1, 2, 3 tai 0. Valitse uudelleen!");
+                        break outer;
                 }
             }
 
