@@ -8,27 +8,39 @@ public class Junahaku {
      * @author Risto Rautanen
      */
 
-//    public static void main(String[] args) {
-//        Asema.haeAsemat();
-//        hae();
-//    }
-
     static public void hae() {
 
-        String jnaTyyppi = "IC";
-        int jnaNumero = 404;
+        String jnaTyyppi;
+        int jnaNumero;
+        int virheCounter = 0;
         Scanner jnaScnr = new Scanner(System.in);
-        System.out.println("Hae junan tapahtumatietoja junan tunnuksella. Anna junan tunnus, esim: IC 404.");
+        System.out.println("Hae junan tapahtumatietoja junan tunnuksella. Anna junatunnus, esim: IC 404.");
 
         junatunnus:
         for (; ; ) {
+
+            if (virheCounter >= 2) {
+                System.out.println("Haluatko palata päävalikkoon?\nVastaa: K/E\n");
+                String virheVastaus = jnaScnr.nextLine();
+                for (; ;) {
+                    if (virheVastaus.toUpperCase().equals("K")) {
+                        break junatunnus;
+                    }
+                    else {
+                        System.out.println("Hae junan tapahtumatietoja junan tunnuksella. Anna junatunnus, esim: IC 404.");
+                        virheCounter = 0;
+                        break;
+                    }
+                }
+            }
 
             String jnaHaku = jnaScnr.nextLine().toUpperCase();
             jnaTyyppi = jnaHaku.replaceAll("[^A-Z]", "");
             try {
                 jnaNumero = Integer.parseInt(jnaHaku.replaceAll("[^0-9]", ""));
             } catch (NumberFormatException e) {
-                System.out.println("*** Junan numero puuttui.\n*** Anna tunnus uudelleen!\n");
+                virheCounter ++;
+                System.out.println("*** Junan numero puuttui.\n*** Anna tunnus uudelleen.\n");
                 continue;
             }
             System.out.println("Tehdään haku junatunnuksella: " + jnaTyyppi + jnaNumero + ".\n");
@@ -37,6 +49,7 @@ public class Junahaku {
             Varikko.lueJunanJSONData(url);
 
             if (Varikko.junat.size() == 0) {                    // Tarkistetaan onko junan numerolla taulukkoa.
+                virheCounter ++;
                 System.out.println("*** Antamallasi junan numerolla ei löytynyt junaa.\n*** Anna tunnus uudelleen.\n");
                 continue;
             }
@@ -69,6 +82,7 @@ public class Junahaku {
                         jnaAsema1 = jnaMenneet.get(jnaMenneet.firstKey());
                         jnaAsema2 = jnaTulevat.get(jnaTulevat.firstKey());
                     } catch (Exception e) {
+                        virheCounter ++;
                         System.out.println("*** Antamallasi junatunnuksella ei löydy aktiivisia junia.\n*** Anna tunnus uudelleen.\n");
                         break;
                     }
@@ -107,16 +121,13 @@ public class Junahaku {
                             + ", Raide: " + jnaRaide2
                     );
 
-//                        System.out.println(j.getTrainType() + j.getTrainNumber()
-//                                + " lähtee " + j.getTimeTableRows().get().getScheduledTime()
-//                                + " asemalta: " + Asema.asemat.get(j.getTimeTableRows().get(0).getStationShortCode())
-//                                + " / " + jnaAsema + ".");
-
                     break junatunnus;
                 }
+                virheCounter ++;
                 System.out.println("*** Antamallasi tunnuksella ei löytynyt junaa.\n*** Anna tunnus uudelleen.\n");
                 continue junatunnus;
             }
         }
+//        jnaScnr.close();
     }
 }
