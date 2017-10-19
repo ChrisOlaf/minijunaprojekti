@@ -21,18 +21,13 @@ public class Asemahaku {
     }
     //Osametodi 1: Kysytään, minkä aseman junat käyttäjä haluaa nähdä
     public static void kysyAsema(Scanner lueAsema) {
-        System.out.println("Mikä asema? (kolmikirjaiminen asemakoodi, esim. HKI)");
+        System.out.println("Mikä asema? (asemakoodi, esim. HKI)");
         annettuAsema = lueAsema.nextLine().toUpperCase();
-        while (annettuAsema.length() != 3) {
-            System.out.println("\nSyötä kolmikirjaiminen koodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
+        while (!(Asema.asemat.containsKey(annettuAsema))) {
+            System.out.println("\nSyötä asemakoodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
             annettuAsema = lueAsema.nextLine().toUpperCase();
         }
     }
-    //OSAMETODI 1:N MUOKKAILUA
-    //while(true)
-    //if (Asema.asemat.contains(annettuAsema)
-    //break
-
     // /live-trains/station/HKI/TPE
     // /live-trains/station/<departure_station_code>/<arrival_station_code>?departure_date=<departure_date>&from=<from>&to=<to>&limit=<limit>
     // Varikko.LueJunanJsonData(String URL)
@@ -49,9 +44,9 @@ public class Asemahaku {
 
         //Filtteröidään asemalta lähtevät junat.
         // Tulostetaan tiedot:
-        //1. Junan koodinimi (trainType + trainNumber)
-        //2. Pääteasema (stationShortCode)
-        //3. Lähtöaika (scheduledTime)
+        //1. Junan koodinimi: trainType + trainNumber (Juna)
+        //2. Pääteasema: stationShortCode (timeTableRows)
+        //3. Lähtöaika: scheduledTime (timeTableRows)
         //4. Junan tunnus (jos lähijuna): commuterLineID (Juna)
         for (Juna j : asemaJunat) {
             if (j.getTimeTableRows().get(0).getType().equals("DEPARTURE") && j.getTimeTableRows().get(0).getStationShortCode().equals(annettuAsema)) {
