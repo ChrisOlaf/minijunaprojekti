@@ -21,6 +21,7 @@ public class Matkahaku {
     // lähtöaseman ja kohdeaseman alustus
     private static String lahtoAsema = "";
     private static String kohdeAsema = "";
+    private static String check = "";
 
     public static void hae() {
 
@@ -28,9 +29,17 @@ public class Matkahaku {
 
         kysyAsema(in, "lähtöasema");
 
+        if ("0".equals(check)) {
+            return;
+        }
+
         System.out.println("");
 
         kysyAsema(in, "kohdeasema");
+
+        if ("0".equals(check)) {
+            return;
+        }
 
         haeJunat(in);
 
@@ -45,9 +54,8 @@ public class Matkahaku {
         for (;;) {
 
             System.out.println("Mikä on matkan " + s + "? (2-4 -kirjaiminen asemakoodi, esim. 'HKI')\n"
-                    + "Jos haluat nähdä listan asemien lyhenteistä ja nimistä, jätä asemakoodi tyhjäksi ja paina ENTER");
-
-            String check = "";
+                    + "Jos haluat nähdä listan asemien lyhenteistä ja nimistä, jätä asemakoodi tyhjäksi ja paina ENTER\n"
+                    + "Jos haluat lopettaa haun, syötä numero '0'");
 
             if ("lähtöasema".equals(s)) {
                 lahtoAsema = in.nextLine().toUpperCase();
@@ -60,6 +68,8 @@ public class Matkahaku {
             if ("".equals(check)) {
                 Asema.listaaAsemat();
                 continue;
+            } else if ("0".equals(check)) {
+                return;
             }
 
             if (Asema.asemat.containsKey(lahtoAsema)) {
