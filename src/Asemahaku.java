@@ -34,7 +34,6 @@ public class Asemahaku {
 
         if ("".equals(annettuAsema)) {
             Asema.listaaAsemat();
-            continue;
         } else if ("0".equals(annettuAsema)) {
             return;
         }
@@ -42,11 +41,20 @@ public class Asemahaku {
         while (!(Asema.asemat.containsKey(annettuAsema))) {
             System.out.println("\nSyötä asemakoodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
             annettuAsema = lukija.nextLine().toUpperCase();
+
+            if ("".equals(annettuAsema)) {
+                Asema.listaaAsemat();
+            } else if ("0".equals(annettuAsema)) {
+                return;
+            }
         }
     }
 
     //Kysytään, haluaako käyttäjä saapuvat vai lähtevät junat
     public static void kysySaapuvatTaiLahtevat(Scanner lukija) {
+        if ("0".equals(annettuAsema)) {
+            return;
+        }
         System.out.println("Lähtevät vai saapuvat junat? (Lähtevät 1, saapuvat 2)");
         luettu = lukija.nextLine();
         for (; ;) {
@@ -72,6 +80,7 @@ public class Asemahaku {
         Varikko.lueJunanJSONData(url);
         // hae junien lista käyttöön paikalliseen muuttujaan
         List<Juna> asemaJunat = Varikko.junat;
+        //Järjestetään junat ajan mukaan
         Collections.sort(asemaJunat, new JunatAsemanMukaanComparator());
 
         //Filtteröidään asemalta lähtevät junat ja tulostetaan junan numero/lähijunan kirjain, pääteasema ja lähtöaika
@@ -105,6 +114,7 @@ public class Asemahaku {
 
         // hae junien lista käyttöön paikalliseen muuttujaan
         List<Juna> asemaJunat = Varikko.junat;
+        //Järjestetään junat ajan mukaan
         Collections.sort(asemaJunat, new JunatAsemanMukaanComparator());
 
         //Filtteröidään asemalle saapuvat junat ja tulostetaan junan numero/lähijunan kirjain, lähtöasema ja saapumisaika
