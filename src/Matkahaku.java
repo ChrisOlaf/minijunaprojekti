@@ -103,6 +103,11 @@ public class Matkahaku {
 
         in.nextLine();
 
+        if ("HKI".equals(lahtoAsema)) {} else if (lahtoAsema.equals(kohdeAsema)) {
+            System.out.println("Lähtöasema ei voi olla sama kuin kohdeasema!");
+            return;
+        }
+
         // muodosta haettava url-pääte asemista
         String url = "/live-trains/station/" + lahtoAsema + "/" + kohdeAsema + "/";
 
