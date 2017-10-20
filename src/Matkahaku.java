@@ -78,7 +78,7 @@ public class Matkahaku {
                 break outer;
             }
 
-            System.out.println("\nSyötä 2-4 -kirjaiminen koodi, esim. 'TKL' (Tikkurila) tai 'ke' (Kerava).");
+            System.out.println("\nSyötä 2-4 -kirjaiminen koodi, esim. 'TKL' (Tikkurila) tai 'ke' (Kerava).\n");
             continue;
 
         }
