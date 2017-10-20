@@ -14,9 +14,10 @@ public class ValikkoMain {
 
         Scanner in = new Scanner(System.in);
 
-        // haetaan lista asemista prosessointia varten
+        // haetaan lista asemista kaikkia metodeja varten valmiiksi
         Asema.haeAsemat();
 
+        // loop valikko, josta pääse pois lopettamalla
         end:
         for (; ; ) {
 
@@ -28,10 +29,12 @@ public class ValikkoMain {
                     + "3 -- Hae matkan perusteella (asemalta asemalle)\n"
                     + "0 -- Lopeta ohjelma\n");
 
+            // välitallennetaan annettu valinta
             valinta = in.nextLine();
 
             System.out.println("");
 
+            // tarkistetaan switchillä, mitä valinta tarkoittaa
             outer:
             for (; ; ) {
                 switch (valinta) {
@@ -62,6 +65,7 @@ public class ValikkoMain {
 
         }
 
+        // ohjelman lopuksi suljetaan Scanner, kun kaikki metodit lopettaneet
         in.close();
 
     }

@@ -1,6 +1,3 @@
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -57,6 +54,7 @@ public class Matkahaku {
                     + "Jos haluat nähdä listan asemien lyhenteistä ja nimistä, jätä asemakoodi tyhjäksi ja paina ENTER\n"
                     + "Jos haluat lopettaa haun, syötä numero '0'");
 
+            // tarkistetaan mitä asemaa haetaan ja välitallennetaan syöte
             if ("lähtöasema".equals(s)) {
                 lahtoAsema = in.nextLine().toUpperCase();
                 check = lahtoAsema;
@@ -65,6 +63,7 @@ public class Matkahaku {
                 check = kohdeAsema;
             }
 
+            // jos syöte on tyhjä, listaa asemat tai jos 0, palaa päävalikkoon
             if ("".equals(check)) {
                 Asema.listaaAsemat();
                 continue;
@@ -72,11 +71,12 @@ public class Matkahaku {
                 return;
             }
 
+            // varmistetaan, että asema on olemassa ennen etenemistä
             if (Asema.asemat.containsKey(lahtoAsema)) {
                 break outer;
             }
 
-            System.out.println("\nSyötä 2-4 -kirjaiminen koodi, esim. 'HKI' (Helsinki) tai 'tpe' (Tampere).");
+            System.out.println("\nSyötä 2-4 -kirjaiminen koodi, esim. 'TKL' (Tikkurila) tai 'ke' (Kerava).");
             continue;
 
         }
@@ -141,16 +141,19 @@ public class Matkahaku {
             // hakee junan lähtö- ja saapumisajat, lokalisoitu TimeTableRow luokan gettereissä
             String lahtoAika = "", kohdeAika = "";
 
+            // etsitään aikataulun rivit läpi, kunnes löydetään annetulta asemalta lähtö
             for (TimeTableRow t : j.getTimeTableRows()) {
                 if (lahtoAsema.equals(t.getStationShortCode()) && "DEPARTURE".equals(t.getType())) {
+
                     // t.getActualTime() -metodi palauttaa actualTimen, jos != null; muuten palauttaa scheduledTimen
                     lahtoAika = t.getActualTime();
                 }
             }
 
+            // etsitään aikataulun rivit läpi, kunnes löydetään annetulle asemalle saapuminen
             for (TimeTableRow t : j.getTimeTableRows()) {
                 if (kohdeAsema.equals(t.getStationShortCode()) && "ARRIVAL".equals(t.getType())) {
-                    kohdeAika = t.getScheduledTime();
+                    kohdeAika = t.getActualTime();
                 }
             }
 

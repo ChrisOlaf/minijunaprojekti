@@ -48,9 +48,11 @@ public class Asema {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            CollectionType tarkempiListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Asema.class);
+            // kerrotaan CollectionType, että asemat listataan ArrayListiin, joka sisältää Asema-olioita
+            CollectionType asemaListanTyyppi = mapper.getTypeFactory().constructCollectionType(ArrayList.class, Asema.class);
 
-            asemaoliot = mapper.readValue(url, tarkempiListanTyyppi);
+            // haetaan oliot URL-osoitteesta JSON-tiedostona asemaoliot-listaan ObjectMapperillä
+            asemaoliot = mapper.readValue(url, asemaListanTyyppi);
 
             // käy läpi asemaoliot ja lisää jokaisesta oliosta lyhenne ja koko nimi asemat-MAP-listaan
             for (Asema a : asemaoliot) {
@@ -61,7 +63,7 @@ public class Asema {
                 asemat.put(a.getStationShortCode(), asemaNimi);
             }
 
-            // aseta aakkosAsemat-lista olemaan TreeSet asemat-listan avaimista
+            // aseta aakkosAsemat-lista olemaan TreeSet asemat-listan avaimista, aakkosjärjestys
             aakkosAsemat = new TreeSet(asemat.keySet());
 
         } catch (Exception ex) {
