@@ -75,7 +75,7 @@ public class Asemahaku {
 
     //Haetaan lähtevät junat käyttäjän antaman aseman mukaan
     public static void haeLahtevatJunatAsemanMukaan() {
-        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=240&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0";
+        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=120&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0";
         // hae uusin data Varikolle
         Varikko.lueJunanJSONData(url);
         // hae junien lista käyttöön paikalliseen muuttujaan
@@ -93,12 +93,14 @@ public class Asemahaku {
                         System.out.println(
                                 "" + j.getCommuterLineID() + "-juna"
                                         + " " + Asema.asemat.get(j.getTimeTableRows().get(j.getTimeTableRows().size() - 1).getStationShortCode())
-                                        + "\n" + "Lähtöaika " + j.getTimeTableRows().get(i).getActualTime() + "\n");
+                                        + "\n" + "Lähtöaika " + j.getTimeTableRows().get(i).getActualTime() + "\n"
+                                        + "Laiturilta " + j.getTimeTableRows().get(i).getCommercialTrack() + "\n");
                     } else {
                         System.out.println(
                                 "" + j.getTrainType() + j.getTrainNumber()
                                         + " " + Asema.asemat.get(j.getTimeTableRows().get(j.getTimeTableRows().size() - 1).getStationShortCode())
-                                        + "\n" + "Lähtöaika " + j.getTimeTableRows().get(i).getActualTime() + "\n");
+                                        + "\n" + "Lähtöaika " + j.getTimeTableRows().get(i).getActualTime() + "\n"
+                                        + "Laiturilta " + j.getTimeTableRows().get(i).getCommercialTrack() + "\n");
                     }
                 }
             }
@@ -107,7 +109,7 @@ public class Asemahaku {
 
     //Haetaan saapuvat junat käyttäjän antaman aseman mukaan
     public static void haeSaapuvatJunatAsemanMukaan() {
-        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=240&minutes_after_arrival=0";
+        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=120&minutes_after_arrival=0";
 
         // hae uusin data Varikolle
         Varikko.lueJunanJSONData(url);
@@ -127,12 +129,14 @@ public class Asemahaku {
                         System.out.println(
                                 "" + j.getCommuterLineID() + "-juna"
                                         + " " + Asema.asemat.get(j.getTimeTableRows().get(0).getStationShortCode())
-                                        + "\n" + "Saapumisaika: " + j.getTimeTableRows().get(i).getActualTime() + "\n");
+                                        + "\n" + "Saapumisaika: " + j.getTimeTableRows().get(i).getActualTime() + "\n"
+                                        + "Laiturille " + j.getTimeTableRows().get(i).getCommercialTrack() + "\n");
                     } else {
                         System.out.println(
                                 "" + j.getTrainType() + j.getTrainNumber()
                                         + " " + Asema.asemat.get(j.getTimeTableRows().get(0).getStationShortCode())
-                                        + "\n" + "Saapumisaika: " + j.getTimeTableRows().get(i).getActualTime() + "\n");
+                                        + "\n" + "Saapumisaika: " + j.getTimeTableRows().get(i).getActualTime() + "\n"
+                                        + "Laiturille " + j.getTimeTableRows().get(i).getCommercialTrack() + "\n");
                     }
                 }
             }
