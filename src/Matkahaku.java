@@ -74,7 +74,7 @@ public class Matkahaku {
             }
 
             // varmistetaan, että asema on olemassa ennen etenemistä
-            if (Asema.asemat.containsKey(lahtoAsema)) {
+            if (Asema.asemat.containsKey(check)) {
                 break outer;
             }
 
