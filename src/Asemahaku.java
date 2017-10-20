@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * Asemahaku pyytää käyttäjältä aseman ja kysyy, haluaako käyttäjä lähtevien vai saapuvien junien tiedot.
- * Pyydetyille junille tulostetaan junan numero/kirjain, pääte- tai lähtöasema ja lähtö- tai saapumisaika.
+ * Pyydetyille junille tulostetaan junan numero/kirjain, pääte- tai lähtöasema, ja lähtö- tai saapumisaika ja laituri.
  *
  * @author Titta Kivikoski
  * @author Anna-Reetta Kohonen
@@ -75,7 +75,7 @@ public class Asemahaku {
 
     //Haetaan lähtevät junat käyttäjän antaman aseman mukaan
     public static void haeLahtevatJunatAsemanMukaan() {
-        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=120&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0";
+        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=240&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0";
         // hae uusin data Varikolle
         Varikko.lueJunanJSONData(url);
         // hae junien lista käyttöön paikalliseen muuttujaan
@@ -83,7 +83,7 @@ public class Asemahaku {
         //Järjestetään junat ajan mukaan
         Collections.sort(asemaJunat, new JunatAsemanMukaanComparator());
 
-        //Filtteröidään asemalta lähtevät junat ja tulostetaan junan numero/lähijunan kirjain, pääteasema ja lähtöaika
+        //Filtteröidään asemalta lähtevät junat ja tulostetaan junan numero/lähijunan kirjain, pääteasema, lähtöaika ja laituri
         for (Juna j : asemaJunat) {
             for (int i = 0; i < j.getTimeTableRows().size() - 1; i++) {
                 if (j.getTimeTableRows().get(i).getStationShortCode().equals(annettuAsema)
@@ -109,7 +109,7 @@ public class Asemahaku {
 
     //Haetaan saapuvat junat käyttäjän antaman aseman mukaan
     public static void haeSaapuvatJunatAsemanMukaan() {
-        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=120&minutes_after_arrival=0";
+        String url = "/live-trains/station/" + annettuAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=240&minutes_after_arrival=0";
 
         // hae uusin data Varikolle
         Varikko.lueJunanJSONData(url);
@@ -119,7 +119,7 @@ public class Asemahaku {
         //Järjestetään junat ajan mukaan
         Collections.sort(asemaJunat, new JunatAsemanMukaanComparator());
 
-        //Filtteröidään asemalle saapuvat junat ja tulostetaan junan numero/lähijunan kirjain, lähtöasema ja saapumisaika
+        //Filtteröidään asemalle saapuvat junat ja tulostetaan junan numero/lähijunan kirjain, lähtöasema, saapumisaika ja laituri
         for (Juna j: asemaJunat) {
             for (int i = 0; i < j.getTimeTableRows().size()-1; i++) {
                 if (j.getTimeTableRows().get(i).getStationShortCode().equals(annettuAsema)
