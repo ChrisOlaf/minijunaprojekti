@@ -34,7 +34,6 @@ public class Asemahaku {
 
         if ("".equals(annettuAsema)) {
             Asema.listaaAsemat();
-            continue;
         } else if ("0".equals(annettuAsema)) {
             return;
         }
@@ -42,11 +41,20 @@ public class Asemahaku {
         while (!(Asema.asemat.containsKey(annettuAsema))) {
             System.out.println("\nSyötä asemakoodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
             annettuAsema = lukija.nextLine().toUpperCase();
+
+            if ("".equals(annettuAsema)) {
+                Asema.listaaAsemat();
+            } else if ("0".equals(annettuAsema)) {
+                return;
+            }
         }
     }
 
     //Kysytään, haluaako käyttäjä saapuvat vai lähtevät junat
     public static void kysySaapuvatTaiLahtevat(Scanner lukija) {
+        if ("0".equals(annettuAsema)) {
+            return;
+        }
         System.out.println("Lähtevät vai saapuvat junat? (Lähtevät 1, saapuvat 2)");
         luettu = lukija.nextLine();
         for (; ;) {
