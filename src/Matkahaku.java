@@ -50,6 +50,8 @@ public class Matkahaku {
         outer:
         for (;;) {
 
+            check = "";
+
             System.out.println("Mikä on matkan " + s + "? (2-4 -kirjaiminen asemakoodi, esim. 'HKI')\n"
                     + "Jos haluat nähdä listan asemien lyhenteistä ja nimistä, jätä asemakoodi tyhjäksi ja paina ENTER\n"
                     + "Jos haluat lopettaa haun, syötä numero '0'");

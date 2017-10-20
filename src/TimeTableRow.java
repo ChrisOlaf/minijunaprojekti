@@ -29,6 +29,7 @@ public class TimeTableRow {
     private Date actualTime;
     private Date liveEstimateTime;
 
+    // palauttaa mahdollisimman ajankohtaisen Date-olion (live-ennuste > todennettu aika > aikataulutettu aika)
     public Date getTime() {
         if (liveEstimateTime != null) {
             return liveEstimateTime;
@@ -39,6 +40,7 @@ public class TimeTableRow {
         }
     }
 
+    // palauta String-tyyppinen lokalisoitu ajan esitys, actualTime, jos olemassa, muuten scheduledTime
     public String getActualTime() {
 
         Locale fi = new Locale("fi", "FI");
@@ -53,6 +55,7 @@ public class TimeTableRow {
 
     }
 
+    // palauttaa String-muotoisen lokalisoidun aikataulutetun ajan
     public String getScheduledTime() {
 
         Locale fi = new Locale("fi", "FI");
