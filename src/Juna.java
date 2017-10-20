@@ -3,6 +3,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Kopioitu Tommin koodista
+ */
+
 public class Juna  {
 
     private boolean cancelled;
