@@ -28,8 +28,17 @@ public class Asemahaku {
 
     //Kysytään, minkä aseman junat käyttäjä haluaa nähdä
     public static void kysyAsema(Scanner lukija) {
-        System.out.println("Mikä asema? (Syötä asemakoodi, esim. HKI (Helsinki) tai TPE (Tampere)");
+        System.out.println("Mikä asema? (Syötä asemakoodi, esim. HKI (Helsinki) tai TPE (Tampere)\n"
+                    + "Jätä kenttä tyhjäksi, jos haluat nähdä listan asemista. Numero '0' lopettaa.");
         annettuAsema = lukija.nextLine().toUpperCase();
+
+        if ("".equals(annettuAsema)) {
+            Asema.listaaAsemat();
+            continue;
+        } else if ("0".equals(annettuAsema)) {
+            return;
+        }
+
         while (!(Asema.asemat.containsKey(annettuAsema))) {
             System.out.println("\nSyötä asemakoodi, esim. HKI (Helsinki) tai TPE (Tampere).\n");
             annettuAsema = lukija.nextLine().toUpperCase();
