@@ -4,6 +4,17 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * TimeTableRow sisältää luokan Juna-olioiden aikatauluriveille sekä metodeja
+ * tietojen tulostamiseen ja pyytämiseen.
+ *
+ * Erityisesti getActualTime ja getScheduledTime on muokattu palauttamaan
+ * String-muotoisen tulosteen ajasta Date-olion sijaan. Lisäksi on luotu
+ * getTime() -metodi, joka palauttaa Date-olion kyseisestä aikataulurivistä.
+ *
+ * @author Antti Pöyhönen
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TimeTableRow {
 
