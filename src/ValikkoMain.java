@@ -14,6 +14,9 @@ public class ValikkoMain {
 
         Scanner in = new Scanner(System.in);
 
+        // tulostaa ASCII logon
+        ValikkoMain.ASCIIlogo();
+
         // haetaan lista asemista kaikkia metodeja varten valmiiksi
         Asema.haeAsemat();
 
@@ -68,6 +71,23 @@ public class ValikkoMain {
         // ohjelman lopuksi suljetaan Scanner, kun kaikki metodit lopettaneet
         in.close();
 
+    }
+
+    private static void ASCIIlogo() {
+
+        String [] logo = {
+            "",
+            " \\ \\    / /  __ \\  |__ \\  / _ \\",
+            "  \\ \\  / /| |__) |    ) || | | |",
+            "   \\ \\/ / |  _  /    / / | | | |",
+            "    \\  /  | | \\ \\   / /_ | |_| |",
+            "     \\/   |_|  \\_\\ |____(_)___/ ",
+            " "
+        };
+
+        for (String s : logo) {
+            System.out.println(s);
+        }
     }
 
 }
