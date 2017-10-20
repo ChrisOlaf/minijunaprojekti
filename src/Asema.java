@@ -72,11 +72,15 @@ public class Asema {
     // listaa kaikki asemat muodossa "lyhenne -- koko nimi"
     public static void listaaAsemat() {
 
+        int count = 0;
+
         for (Object sobj : aakkosAsemat) {
             String s = (String) sobj;
             System.out.println(s + " -- " + asemat.get(s));
+            count++;
         }
-        System.out.println("");
+
+        System.out.println("\nLöydetty " + count + " asemaa.\n");
 
     }
 
