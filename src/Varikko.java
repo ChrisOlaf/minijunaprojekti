@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * !Sisältö lähtökohtaisesti Tommin koodia vain hieman mmuokattuna!
+ *
  * Varikko parseroi digitrafficilta tulevan junadatan Juna- ja
  * TimeTableRow-luokkien pyytämillä parametreilla.
  *
@@ -39,7 +41,7 @@ public class Varikko {
             // System.out.println(Varikko.junat.get(0));
 
         } catch (Exception e) {
-            // System.out.println("Data ei saanut Lukea.");
+            // Virheilmoitus jos data ei saanut lukea.
             System.out.println("Tällä haulla ei löytynyt mitään tietoja.");
         }
     }
